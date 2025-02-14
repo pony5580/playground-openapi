@@ -1,0 +1,11 @@
+{
+  "name": "playground-for-tcm",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "api-gen": "sh openapi-generate.sh"
+  },
+  "volta": {
+    "node": "22.13.1"
+  }
+}

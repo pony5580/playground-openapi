@@ -1,0 +1,112 @@
+openapi: 3.0.0
+info:
+  title: Sample User API
+  description: シンプルな REST API のサンプル（OpenAPI 3.0）
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/v1
+    description: 本番サーバー
+paths:
+  /users:
+    get:
+      summary: ユーザー一覧を取得
+      description: すべてのユーザーのリストを取得します。
+      responses:
+        '200':
+          description: ユーザー一覧
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: 新しいユーザーを作成
+      description: ユーザーを新規作成します。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: ユーザーが正常に作成されました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /users/{id}:
+    get:
+      summary: 指定した ID のユーザー情報を取得
+      description: ユーザー ID を指定してユーザー情報を取得します。
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ユーザー情報
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: ユーザーが見つかりません
+    put:
+      summary: 指定した ID のユーザー情報を更新
+      description: 指定した ID のユーザー情報を更新します。
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: ユーザーが正常に更新されました
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: ユーザーが見つかりません
+    delete:
+      summary: 指定した ID のユーザーを削除
+      description: 指定した ID のユーザーを削除します。
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: ユーザーが正常に削除されました
+        '404':
+          description: ユーザーが見つかりません
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: 山田 太郎
+        email:
+          type: string
+          format: email
+          example: taro.yamada@example.com
